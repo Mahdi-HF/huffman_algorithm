@@ -6,11 +6,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 typedef long long ll;
 #define size 26
-#define bufSize 1000
+#define bufSize 100
 #define fori(i,n) for(int i = 0; i < n; i++)
 
 int count_a[size];
@@ -18,7 +19,6 @@ int count_A[size];
 int spaces,enters;
 
 char data[bufSize];
-char character;
 
 void showArr(string name,int* arr,int len)
 {
@@ -26,29 +26,41 @@ void showArr(string name,int* arr,int len)
     fori(i, len) { cout << arr[i] << " "; }
     cout << endl ;
 }
-void showInt(string name,int integer)
-{
-    cout << name << " : " << integer << endl;
-}
+void showInt(string name,int integer) { cout << name << " : " << integer << endl; }
 
 int main(){
-    
     // open a file in read mode.
     ifstream infile;
-    infile.open("Input.txt");
+    infile.open("/Users/mahdi/Documents/Files/DS/huffman/Input.txt",ios::in);
     
+    // check whether the file has opended or not.
     if (infile.is_open()) cout << "Reading from the file" << endl;
     else cout << "Unable to open the file" <<endl;
-    infile >> data;  //TODO : this part doesn't work
+
+    int i=0;
+    while (infile.eof() != 1)
+    {
+        data[i] = infile.get();
+        i++;
+    }
+    data[i-1]='\0';
     
     // write the data at the screen.
-    cout << "file data are :" << data << endl;
+    cout << "file data are : " << data << endl;
     
     // close the opened file.
     infile.close();
     
     
-    //TODO : change the chars to numbers
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     int indices[bufSize] = {65,69,75,65,65,65,65,78,98,112,98,98,98,32,1,1,1,1,1};
     
     fori(i, bufSize)
@@ -73,14 +85,31 @@ int main(){
             enters++;
         }
     }
+     
+     */
     
-    //add array completing and file open and closing || two TODO added
+    // open a file in read mode.
+    ofstream ofile;
+    ofile.open("/Users/mahdi/Documents/Files/DS/huffman/Zip.txt",ios::out);
+
+    // check whether the file has created or not.
+    if (ofile.is_open()) cout << "writing to the file" << endl;
+    else cout << "Unable to write to the file" <<endl;
+
+    ofile << data ;
+    
+     
+     // write the data at the screen.
+//     cout << "editted file data are : " << data << endl;
+    
+     // close the opened file.
+     infile.close();
     
     
-    showArr("count_A",count_A,size);
-    showArr("count_a",count_a,size);
-    showInt("spaces ",spaces);
-    showInt("enters ",enters);
+//    showArr("count_A",count_A,size);
+//    showArr("count_a",count_a,size);
+//    showInt("spaces ",spaces);
+//    showInt("enters ",enters);
     
     cout << "-------------------------------------------------------------" << endl << "** Bye **" << endl;
     return 0 ;
