@@ -5,19 +5,29 @@
 //  Copyright © 2019 mahdi. All rights reserved.
 
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include <cstdlib>
 using namespace std;
 
 typedef long long ll;
 #define MAX_TREE_HT 100
-#define bufSize 500
+#define bufSize 1000
 #define fori(i,n) for(int i = 0; i < n; i++)
 
-ofstream oufile;
+ofstream oufile; // huffman
+ifstream infile; // input
+ofstream ofile;  // Zip
+
+char name;
+string str;
+vector<pair<char, string> > vec;
+//vector<pair<char, string> >::iterator it;
+int Vindex;
+
+string MainStr;
 
 char data[bufSize];
-char dataH[bufSize];
 char arr[bufSize];
 int freq[bufSize];
 
@@ -185,8 +195,28 @@ void printCodes(MinHeapNode* root, int arr2[], int top)
         fori(ii, top)
         {
             oufile << arr2[ii];
+            str += to_string( arr2[ii] );
         }
         oufile <<  '\n';
+        
+//        string s = to_string(root->character);
+//        char char_array[ s.length() + 1];
+//        strcpy(char_array, s.c_str());
+        
+        name = root->character;
+        cout<<name<<' '<<str;
+        cout<<'\n';
+        
+        pair<char, string> p(name, str);
+        vec.push_back(p);
+        
+//        vec[Vindex].first  = name ; //the character
+//        vec[Vindex].second = str ; //string of the numbers like 00110101101010
+//        Vindex++;
+        
+        //making them empty
+        str="";
+        name=' ';
     }
 }
 
@@ -201,12 +231,10 @@ void HuffmanCodes(char data[], int freq[], int size)
 
 
 int main(){
-    // open a file in read mode.
-    ifstream infile;
     infile.open("/Users/mahdi/Documents/Files/DS/huffman/Input.txt",ios::in);
     
     // check whether the file has opended or not.
-    if (infile.is_open()) cout << "Reading from the file" << endl;
+    if (infile.is_open()) cout << "Reading from the Input.txt" << endl;
     else cout << "Unable to open the file" <<endl;
 
     int i=0; // size of data
@@ -214,7 +242,8 @@ int main(){
     {
         data[i++] = infile.get();
     }
-    data[i - 1] = '\0';
+//    data[i - 1] = 'EOF';
+    data[i-1] = '\0';
     
 //    cout << "file data are : " << data << endl;
     
@@ -226,10 +255,8 @@ int main(){
     oufile.open("/Users/mahdi/Documents/Files/DS/huffman/Huffman.txt",ios::out);
     
     // check whether the file has been created or not.
-    if (oufile.is_open()) cout << "writing to the file2" << endl;
+    if (oufile.is_open()) cout << "writing to the Huffman.txt" << endl;
     else cout << "Unable to write to the file2" <<endl;
-    
-    oufile << dataH ;
     
     int j = 0; // size of arr & freq
     fori(m, i)
@@ -249,28 +276,42 @@ int main(){
         }
     }
     
-    
-//    cout<<endl;
-//    fori(iii, j)
-//    {
-//        cout<<arr[iii]<<' ';
-//        cout<<freq[iii]<<' ';
-//        cout<<endl;
-//    }
-    
     int size = j-1;
     HuffmanCodes(arr, freq, size);
     
+    //process the data:
+    fori(iiii, i)
+    {
+//        it = find (vec.begin(), vec.end(), data[iiii]);
+//        if (it != vec.end())
+//        {
+//            cout << "Element " << 20 <<" found at position : " ;
+//            cout << it - vec.begin() << "\n" ;
+//        }
+//        else
+//        {
+//            cout << "Element not found.\n";
+//        }
+        
+        fori(fu, vec.size())
+        {
+            if (vec[fu].first == data[iiii] )
+            {
+                MainStr += vec[fu].second;
+            }
+        }
+    }
     
-    // open a file in read mode.
-    ofstream ofile;
+    
     ofile.open("/Users/mahdi/Documents/Files/DS/huffman/Zip.txt",ios::out);
 
     // check whether the file has been created or not.
-    if (ofile.is_open()) cout << "writing to the file" << endl;
+    if (ofile.is_open()) cout << "writing to the Zip.txt" << endl;
     else cout << "Unable to write to the file" <<endl;
 
-    ofile << data ;
+    cout << MainStr << endl;
+    
+    ofile << MainStr;
     
      
      // write the data at the screen.
@@ -279,6 +320,6 @@ int main(){
      // close the opened file.
      infile.close();
     
-    cout << "---------------------------------------" << endl << "** Bye **" << endl;
+    cout << "----------------------------------------------------------------" << endl << "** Bye **" << endl;
     return 0 ;
 }
