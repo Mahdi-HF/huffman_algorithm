@@ -13,7 +13,7 @@
 using namespace std;
 
 typedef long long ll;
-#define MAX_TREE_HT 100
+#define TREE_HT 100
 #define bufSize 1000
 #define fori(i,n) for(int i = 0; i < n; i++)
 
@@ -84,7 +84,7 @@ void swapMinHeapNode(MinHeapNode** a, MinHeapNode** b)
     *b = t;
 }
 
-void minHeapify(MinHeap* minHeap, int idx)
+void Heapifier(MinHeap* minHeap, int idx)
 {
     int smallest = idx;
     int left = 2 * idx + 1;
@@ -99,7 +99,7 @@ void minHeapify(MinHeap* minHeap, int idx)
     if (smallest != idx)
     {
         swapMinHeapNode(&minHeap->array[smallest],&minHeap->array[idx]);
-        minHeapify(minHeap, smallest);
+        Heapifier(minHeap, smallest);
     }
 }
 
@@ -111,7 +111,7 @@ MinHeapNode* extractMin(MinHeap* minHeap)
     minHeap->array[0] = minHeap->array[minHeap->size - 1];
     
     --minHeap->size;
-    minHeapify(minHeap, 0);
+    Heapifier(minHeap, 0);
     
     return temp;
 }
@@ -136,10 +136,10 @@ void buildMinHeap(MinHeap* minHeap)
     int i;
     
     for (i = (n - 1) / 2; i >= 0; --i)
-        minHeapify(minHeap, i);
+        Heapifier(minHeap, i);
 }
 
-int isLeaf(MinHeapNode* root) { return !(root->left) and !(root->right); }
+int LeafOrNot(MinHeapNode* root) { return !(root->left) and !(root->right); }
 
 MinHeap* createAndBuildMinHeap(char data[], int freq[], int size)
 {
@@ -175,19 +175,19 @@ MinHeapNode* buildHuffmanTree(char data[], int freq[], int size)
     return extractMin(minHeap);
 }
 
-void printCodes(MinHeapNode* root, int arr2[], int top)
+void printer(MinHeapNode* root, int arr2[], int top)
 {
     if (root->left) {
         arr2[top] = 0;
-        printCodes(root->left, arr2, top + 1);
+        printer(root->left, arr2, top + 1);
     }
     
     if (root->right) {
         arr2[top] = 1;
-        printCodes(root->right, arr2, top + 1);
+        printer(root->right, arr2, top + 1);
     }
 
-    if (isLeaf(root)) {
+    if (LeafOrNot(root)) {
 //        cout<< root->character <<": ";
 //        showArr(arr2, top);
         oufile << root->character;
@@ -226,9 +226,9 @@ void HuffmanCodes(char data[], int freq[], int size)
 {
     MinHeapNode* root = buildHuffmanTree(data, freq, size);
     
-    int arr2[MAX_TREE_HT], top = 0;
+    int arr2[TREE_HT], top = 0;
     
-    printCodes(root, arr2, top);
+    printer(root, arr2, top);
 }
 
 ll binaryToDecimal(ll n)
@@ -302,6 +302,8 @@ int main(){
     int size = j-1;
     HuffmanCodes(arr, freq, size);
     
+    oufile.close();
+    
     //process the data:
     fori(iiii, i)
     {
@@ -350,6 +352,7 @@ int main(){
 //    ll len = 5;
     cout<<len<<endl;
     
+    ofile << MainStr;
     
     fori(j, len)
     {
@@ -360,7 +363,7 @@ int main(){
         
         ll how2 = binaryToDecimal(what);
         char whatever = how2;
-        ofile << whatever;
+//        ofile << whatever;
         what = 0;
         how2 = 0;
         whatever = ""[0];
@@ -374,7 +377,7 @@ int main(){
 //     cout << "editted file data are : " << data << endl;
     
      // close the opened file.
-     infile.close();
+     ofile.close();
     
     cout << "----------------------------------------------------------------" << endl << "** Bye **" << endl;
     return 0 ;
