@@ -231,24 +231,24 @@ void HuffmanCodes(char data[], int freq[], int size)
     printCodes(root, arr2, top);
 }
 
-int binaryToDecimal(ll n)
+ll binaryToDecimal(ll n)
 {
     ll num = n;
-    int dec_value = 0;
+    ll dec_value = 0;
     
     // Initializing base value to 1, i.e 2^0
-    int base = 1;
+    ll base = 1;
     
     ll temp = num;
-    while (temp) {
-        int last_digit = temp % 10;
+    while (temp)
+    {
+        ll last_digit = temp % 10;
         temp = temp / 10;
         
         dec_value += last_digit * base;
         
         base = base * 2;
     }
-    
     return dec_value;
 }
 
@@ -342,32 +342,33 @@ int main(){
 //    cout << static_cast<char>( MainStr.substr(0,8) ) << endl;
     
     
-//    char fuck = (char) MainStr.substr(0,8);
-//    cout<<fuck<<endl;
+//    char what = (char) MainStr.substr(0,8);
+//    cout<<what<<endl;
     
     
-//    ll len = ( MainStr.length() / 8 ) ;
-    ll len = 5;
+    ll len = ( MainStr.length() / 8 ) + 1 ;
+//    ll len = 5;
     cout<<len<<endl;
     
     
-    for (int jj=0; jj<len; jj++)
+    fori(j, len)
     {
-        string shit = MainStr;
-        int nu = jj*8;
-        ll fuck = stoll( shit.substr(nu,nu+7) );
-        int fuck2 = binaryToDecimal(fuck);
-        char fucker = fuck2;
-        ofile << fucker;
-        ofile << " shit ";
-        fuck = 0;
-        fuck2 = 0;
-        fucker = '\0';
+        int nu = (j*8);
+        int num = nu+8;
+        ll what = stoll( MainStr.substr(nu,num) );
+        cout<<MainStr.substr(nu,num)<<endl;
+        
+        ll how2 = binaryToDecimal(what);
+        char whatever = how2;
+        ofile << whatever;
+        what = 0;
+        how2 = 0;
+        whatever = ""[0];
     }
 
     
-//    cout<<fuck<<endl;
-//    cout<<fucker<<endl;
+//    cout<<what<<endl;
+//    cout<<whatever<<endl;
     
      // write the data at the screen.
 //     cout << "editted file data are : " << data << endl;
