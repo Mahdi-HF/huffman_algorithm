@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <string>
+#include <sstream>
 #include <cstdlib>
 using namespace std;
 
@@ -229,6 +231,27 @@ void HuffmanCodes(char data[], int freq[], int size)
     printCodes(root, arr2, top);
 }
 
+int binaryToDecimal(ll n)
+{
+    ll num = n;
+    int dec_value = 0;
+    
+    // Initializing base value to 1, i.e 2^0
+    int base = 1;
+    
+    ll temp = num;
+    while (temp) {
+        int last_digit = temp % 10;
+        temp = temp / 10;
+        
+        dec_value += last_digit * base;
+        
+        base = base * 2;
+    }
+    
+    return dec_value;
+}
+
 
 int main(){
     infile.open("/Users/mahdi/Documents/Files/DS/huffman/Input.txt",ios::in);
@@ -311,9 +334,41 @@ int main(){
 
     cout << MainStr << endl;
     
-    ofile << MainStr;
+//    ofile << MainStr;
     
-     
+//    string user;
+//    getline(cin, user);
+//    cout << static_cast<char>(user);
+//    cout << static_cast<char>( MainStr.substr(0,8) ) << endl;
+    
+    
+//    char fuck = (char) MainStr.substr(0,8);
+//    cout<<fuck<<endl;
+    
+    
+//    ll len = ( MainStr.length() / 8 ) ;
+    ll len = 5;
+    cout<<len<<endl;
+    
+    
+    for (int jj=0; jj<len; jj++)
+    {
+        string shit = MainStr;
+        int nu = jj*8;
+        ll fuck = stoll( shit.substr(nu,nu+7) );
+        int fuck2 = binaryToDecimal(fuck);
+        char fucker = fuck2;
+        ofile << fucker;
+        ofile << " shit ";
+        fuck = 0;
+        fuck2 = 0;
+        fucker = '\0';
+    }
+
+    
+//    cout<<fuck<<endl;
+//    cout<<fucker<<endl;
+    
      // write the data at the screen.
 //     cout << "editted file data are : " << data << endl;
     
